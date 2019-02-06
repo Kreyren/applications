@@ -7,6 +7,11 @@ sdk: org.winepak.Sdk
 
 command: lol
 
+inherit-extensions:
+  - org.winepak.Platform.Extension.corefonts
+  - org.winepak.Platform.Extension.vcrun2017
+  #- org.winepak.Platform.Extension.adobeair # Depends on https://github.com/winepak/winepak-sdk-images/pull/38
+
 add-extensions:
   org.winepak.Platform.Compat32:
     directory: lib/32bit
@@ -16,12 +21,14 @@ add-extensions:
     
   org.winepak.Platform.Wine:
     directory: lib/wine
+    # version: 4.0-staging # Depends on https://github.com/winepak/winepak-sdk-images/pull/37
     version: 3.8-staging
     add-ld-path: lib
     no-autodownload: false
     
   org.winepak.Platform.Wine.Compat32:
     directory: lib/wine-32bit
+    # version: 4.0-staging # Depends on https://github.com/winepak/winepak-sdk-images/pull/37
     version: 3.8-staging
     add-ld-path: lib
     no-autodownload: false
@@ -89,18 +96,19 @@ modules:
           - x86_64
         dest-filename: lol-installer
         commands:
-          - if [ -z "$WINEPREFIX" ] ; then
+          - if [[ -z "${WINEPREFIX}" ]] ; then
           - '    echo "No wine prefix set or is empty, abort."'
           - '    exit 1'
           - fi
           - 
-          - if [ -e "${WINEPREFIX}/dosdevices/c:/Riot Games/League of Legends" ] ; then
-          - '    echo "This prefix already has an exisiting ''League of Legends'' install at ${WINEPREFIX}"'
+          - if [[ -e "${WINEPREFIX}/dosdevices/c:/Riot Games/League of Legends" ]] ; then
+          - '    echo "This prefix already has an exisiting ''League of Legends'' installed at ${WINEPREFIX}"'
           - '    echo "In order to install ''League of Legends'' you must move or delete the current prefix."'
           - '    exit 1'
           - fi
           - 
           - echo "Downloading installer..."
+          - '# Can't we add this? https://github.com/RXT067/Scripts/blob/d39f751d56fe8b6d325fe5a0c98c26c715930a1b/KUWAC/CONFIGURATION/LeagueOfLegends.sh#L16'
           - curl -L --progress-bar --output "${XDG_CACHE_HOME}/lol-installer.exe" "https://riotgamespatcher-a.akamaihd.net/releases/live/installer/deploy/League%20of%20Legends%20installer%20NA.exe"
           - 
           - echo "Setting-up wine prefix..."
@@ -122,7 +130,7 @@ modules:
           - 
           - echo "Enable GrabFullScreen"
           - wine64 reg add 'HKEY_CURRENT_USER\Software\Wine\X11 Driver' /v GrabFullScreen /d Y /f
-          - 
+          -
           - echo "Override DLLs..."
           - wine64 reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v api-ms-win-core-console-l1-1-0.dll /d native,builtin /f
           - wine64 reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v api-ms-win-core-datetime-l1-1-0.dll /d native,builtin /f
@@ -168,8 +176,8 @@ modules:
           - wine64 reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v d3dcompiler_47.dll /d native,builtin /f
           - wine64 reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v msvcp140.dll /d native,builtin /f
           - wine64 reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v ucrtbase.dll /d native,builtin /f
-          - wine64 reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v vcruntime140.dll /d native,builtin
-          - 
+          - wine64 reg add 'HKEY_CURRENT_USER\Software\Wine\DllOverrides' /v vcruntime140.dll /d native,builtin 
+          -
           - echo "Installing application..."
           - wine64 "${XDG_CACHE_HOME}/lol-installer.exe"
           - 
@@ -179,18 +187,19 @@ modules:
           - i386
         dest-filename: lol-installer
         commands:
-          - if [ -z "$WINEPREFIX" ] ; then
+          - if [ -z "${WINEPREFIX}" ]; then
           - '    echo "No wine prefix set or is empty, abort."'
           - '    exit 1'
           - fi
           - 
-          - if [ -e "${WINEPREFIX}/dosdevices/c:/Riot Games/League of Legends" ] ; then
-          - '    echo "This prefix already has an exisiting ''League of Legends'' install at ${WINEPREFIX}"'
+          - if [ -e "${WINEPREFIX}/dosdevices/c:/Riot Games/League of Legends" ]; then
+          - '    echo "This prefix already has an exisiting ''League of Legends'' installed at ${WINEPREFIX}"'
           - '    echo "In order to install ''League of Legends'' you must move or delete the current prefix."'
           - '    exit 1'
           - fi
           - 
           - echo "Downloading installer..."
+          - '# Can't we add this? https://github.com/RXT067/Scripts/blob/d39f751d56fe8b6d325fe5a0c98c26c715930a1b/KUWAC/CONFIGURATION/LeagueOfLegends.sh#L16'
           - curl -L --progress-bar --output "${XDG_CACHE_HOME}/lol-installer.exe" "https://riotgamespatcher-a.akamaihd.net/releases/live/installer/deploy/League%20of%20Legends%20installer%20NA.exe"
           - 
           - echo "Setting-up wine prefix..."
