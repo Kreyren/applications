@@ -1,3 +1,9 @@
+# Doesn't open on Endless OS and Ubuntu
+# Updated Wine from 3.8-staging on 4.0-staging which works on my gentoo system
+## Based on https://github.com/winepak/winepak-sdk-images/tree/master/wine 4.0-staing is not present -> redo.
+# Adobeair seems to be missing -> mandatory for launcher
+## Based on https://github.com/winepak/winepak-sdk-images/tree/master/extension adobeair is not supported and is mandatory.
+
 app-id: com.leagueoflegends.Client
 branch: stable
 
