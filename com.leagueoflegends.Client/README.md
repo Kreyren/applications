@@ -12,22 +12,22 @@ A Multiplayer Online Battle Arena Game
 ### Repo
 #### 32bit
 
-    flatpak-builder --arch=i386 --force-clean builds --repo=winepak com.leagueoflegends.Client.json
+    flatpak-builder --arch=i386 --force-clean builds --repo=winepak com.leagueoflegends.Client.yml
     flatpak --user install winepak com.leagueoflegends.Client
     
 #### 64bit
 
-    flatpak-builder --arch=x86_64 --force-clean builds --repo=winepak com.leagueoflegends.Client.json
+    flatpak-builder --arch=x86_64 --force-clean builds --repo=winepak com.leagueoflegends.Client.yml
     flatpak --user install winepak com.leagueoflegends.Client
 
 ### Direct
 #### 32bit
 
-    flatpak-builder --user --arch=i386 --force-clean --install builds com.leagueoflegends.Client.json
+    flatpak-builder --user --arch=i386 --force-clean --install builds com.leagueoflegends.Client.yml
     
 #### 64bit
 
-    flatpak-builder --user --arch=x86_64 --force-clean --install builds com.leagueoflegends.Client.json
+    flatpak-builder --user --arch=x86_64 --force-clean --install builds com.leagueoflegends.Client.yml
 
 ## Run
 
